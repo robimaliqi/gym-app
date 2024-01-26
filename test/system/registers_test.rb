@@ -10,8 +10,9 @@ class RegistersTest < ApplicationSystemTestCase
     fill_in 'Last name', with: 'Smith'
     fill_in 'Email', with: 'chris@example.com'
     fill_in 'Password', with: 'password123'
+    fill_in 'Password confirmation', with: 'password123'
 
-    click_on 'Register'
+    click_on 'Sign up'
   
     assert_selector "h1", text: "My classes"
   end
