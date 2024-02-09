@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>My Classes</h1>
+
+<div id="gym_classes">
+  <% @gym_classes.each do |gym_class| %>
+    <%= render gym_class %>
+    <p>
+      <%= link_to "Show this gym class", gym_class %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New gym class", new_gym_class_path %>

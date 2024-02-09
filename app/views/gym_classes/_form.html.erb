@@ -1,0 +1,17 @@
+<%= form_with(model: gym_class) do |form| %>
+  <% if gym_class.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(gym_class.errors.count, "error") %> prohibited this gym_class from being saved:</h2>
+
+      <ul>
+        <% gym_class.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
