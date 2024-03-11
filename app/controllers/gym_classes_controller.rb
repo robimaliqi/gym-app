@@ -1,12 +1,11 @@
 class GymClassesController < ApplicationController
-  before_action :set_gym_class, only: %i[ show edit update destroy ]
 
-  # GET /gym_classes or /gym_classes.json
+  # GET /gym_classes
   def index
     @gym_classes = GymClass.all
   end
 
-  # GET /gym_classes/1 or /gym_classes/1.json
+  # GET /gym_classes/1
   def show
   end
 
@@ -19,42 +18,16 @@ class GymClassesController < ApplicationController
   def edit
   end
 
-  # POST /gym_classes or /gym_classes.json
+  # POST /gym_classes
   def create
-    @gym_class = GymClass.new(gym_class_params)
-
-    respond_to do |format|
-      if @gym_class.save
-        format.html { redirect_to gym_class_url(@gym_class), notice: "Gym class was successfully created." }
-        format.json { render :show, status: :created, location: @gym_class }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @gym_class.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
-  # PATCH/PUT /gym_classes/1 or /gym_classes/1.json
+  # PATCH/PUT /gym_classes/1 
   def update
-    respond_to do |format|
-      if @gym_class.update(gym_class_params)
-        format.html { redirect_to gym_class_url(@gym_class), notice: "Gym class was successfully updated." }
-        format.json { render :show, status: :ok, location: @gym_class }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @gym_class.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
-  # DELETE /gym_classes/1 or /gym_classes/1.json
+  # DELETE /gym_classes/1
   def destroy
-    @gym_class.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to gym_classes_url, notice: "Gym class was successfully destroyed." }
-      format.json { head :no_content }
-    end
   end
 
   private
