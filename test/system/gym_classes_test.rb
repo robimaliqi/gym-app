@@ -2,19 +2,18 @@ require "application_system_test_case"
 
 class GymClassesTest < ApplicationSystemTestCase
   include TestHelpers
-  # setup do
-  #   @gym_class = gym_classes(:one)
-  # end
 
-  # test "Seeing all current available classes" do
-  #   visit gym_classes_url
-  #   assert_selector "h1", text: "My Classes"
-  # end
+  test "See all current available classes" do
+    GymClass.create!(title: "Yoga", date_and_time: Time.new(2024,2,5,10,00), price: "£20")
+    GymClass.create!(title: "Zumba", date_and_time: Time.new(2024,2,5,10,00), price: "£20")
+    GymClass.create!(title: "Pillates", date_and_time: Time.new(2024,2,5,10,00), price: "£20")
 
-  #two possible scenarios:
-  # 1) signed up and logged in user books a class and the class is added to their bookings
+    visit gym_classes_url
 
-  # 2) a user that is not signed up logged in is able to book a one of booking without signing up or logging in also 
+    assert_text "Yoga"
+    assert_text "Zumba"
+    assert_text "Pillates"
+  end
 
   test "Add a class to my bookings when I have registered and logged in" do
     register
@@ -37,6 +36,29 @@ class GymClassesTest < ApplicationSystemTestCase
 
     assert_text "Your Spin class on 03/02/2024 at 2pm has been successfully added to your Bookings"
   end
+
+  test "Add mutliple classes to my bookings" do
+    register
+    gym_class1 = GymClass.create!(title: "Spin", date_and_time: Time.new(2024,2,3,14,00), price: "£20")
+    visit gym_classes_url
+    id = dom_id gym_class1
+    within '#' + id do
+      click_on "Book this gym class"
+    end
+    gym_class2 = GymClass.create!(title: "Yoga", date_and_time: Time.new(2024,2,5,10,00), price: "£20")
+    visit gym_classes_url
+    id = dom_id gym_class2
+    within '#' + id do
+      click_on "Book this gym class"
+    end
+
+    visit bookings_url
+
+    assert_text "Your Yoga class on 05/02/2024 at 10am has been successfully added to your Bookings"
+    assert_text "Your Spin class on 03/02/2024 at 2pm has been successfully added to your Bookings"
+  end
+
+
 
   # test "should Update Gym class" do
   #   visit gym_class_url(@gym_class)
