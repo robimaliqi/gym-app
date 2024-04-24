@@ -5,11 +5,6 @@
 <div id="gym_classes">
   <% @gym_classes.each do |gym_class| %>
     <%= render gym_class %>
-    <p>
-      <%= link_to "Show this gym class", gym_class %>
-    </p>
-
-    <%= button_to "Book this gym class", bookings_path, params: { gym_class_id: gym_class.id } %>
   <% end %>
 </div>
 
