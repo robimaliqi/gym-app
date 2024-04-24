@@ -3,6 +3,7 @@
 <div id="bookings">
   <% @bookings.each do |booking| %>
     <%= render partial: "booking", locals: { booking: booking } %>
+    <%= button_to "Cancel", booking_path(booking.id), method: :delete %>
   <% end %>
 </div>
 
