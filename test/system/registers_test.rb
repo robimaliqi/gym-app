@@ -14,6 +14,6 @@ class RegistersTest < ApplicationSystemTestCase
 
     click_on 'Sign up'
   
-    assert_selector "h1", text: "My Classes"
+    assert_selector "h1", text: "Choose your payment method"
   end
 end
