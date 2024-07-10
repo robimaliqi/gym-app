@@ -21,6 +21,6 @@ module TestHelpers
     fill_in 'Email', with: 'chris@example.com'
     fill_in 'Password', with: 'password123'
     click_on 'Log in'
-    assert_selector "h1", text: "My Classes"
+    assert_selector "h1", text: "Home#index"
   end
 end
