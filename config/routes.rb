@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :subscriptions
   resources :bookings
   resources :gym_classes
-  devise_for :users
+  devise_for :users, controllers: { registrations: "registrations" }
   root 'home#index'
 
   get '/payment_method_selection', to: 'subscriptions#payment_method_selection'
