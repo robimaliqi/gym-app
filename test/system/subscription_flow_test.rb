@@ -8,7 +8,7 @@ class SubscriptionFlowTest < ApplicationSystemTestCase
 
     assert_text "Choose your payment method"
     assert_selector "button", text: "Pay Monthly"
-    assert_selector "button", text: "Pay As You Go"
+    assert_selector "a", text: "Pay As You Go"
   end
 
   test "user redirected to Stripe checkout for monthly subscription" do
@@ -16,7 +16,7 @@ class SubscriptionFlowTest < ApplicationSystemTestCase
 
     assert_text "Choose your payment method"
     assert_selector "button", text: "Pay Monthly"
-    assert_selector "button", text: "Pay As You Go"
+    assert_selector "a", text: "Pay As You Go"
     
     click_on "Pay Monthly"
 
@@ -25,22 +25,23 @@ class SubscriptionFlowTest < ApplicationSystemTestCase
   
   test "monthly user logs in and does not see gym class prices" do
     user = User.create!(email: 'chris@example.com', password: 'password123')
-    Subscription.create(user_id: user)
+    Subscription.create(user_id: user.id)
+    GymClass.create!(title: "Yoga", date_and_time: Time.new(2024,2,5,10,00), price: "20")
+
+    login
+    click_on "Gym classes"
+    assert_no_text "£20"
+  end
+
+  test "when a Pay as you go user logs in they are able to book a singular Gym class" do
+    user = User.create!(email: 'chris@example.com', password: 'password123')
+    GymClass.create!(title: "Yoga", date_and_time: Time.new(2024,2,5,10,00), price: "20")
 
     login
 
-    expect(page).not_to have_content('price: £20')
-  end
-
-  # test "user redirected to Stripe checkout for pay as you go subscription" do
-  #   register
-
-  #   assert_text "Choose your payment method"
-  #   assert_selector "button", text: "Pay Monthly"
-  #   assert_selector "button", text: "Pay As You Go"
+    click_on "Gym classes"
+    click_on "Book this gym class"
+    assert_current_path(%r{/c/pay})
     
-  #   click_on "Pay As You Go"
-
-  #   assert_current_path(%r{/c/pay})
-  # end
+  end
 end
