@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   get '/checkout/success', to: 'subscriptions#checkout_success', as: 'checkout_success'
   get '/checkout/cancel', to: 'subscriptions#checkout_cancel', as: 'checkout_cancel'
 
+  get '/bookings/payment_verification', to: 'bookings#payment_verification', as: 'payment_verification'
 end
