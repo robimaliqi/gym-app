@@ -30,6 +30,24 @@ class BookingsController < ApplicationController
     end
   end
 
+  def payment_verification
+    session_id = params[:session_id]
+    
+    if session_id.present?
+      session = Stripe::Checkout::Session.retrieve(session_id)
+
+      if session.payment_status == 'paid'
+        gym_class_id = session.metadata.gym_class_id
+        gym_class = GymClass.find(gym_class_id)
+
+        @booking = current_user.bookings.create!(gym_class: gym_class)
+        redirect_to bookings_url
+      end
+    else
+      redirect_to gym_classes_path
+    end
+  end
+
   # PATCH/PUT
   def update
   end
