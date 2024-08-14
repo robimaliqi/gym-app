@@ -1,13 +1,17 @@
 <div id="<%= dom_id gym_class %>">
   <h2><%= gym_class.title %></h2><br>
   <p><%= gym_class.date_and_time %></p><br>
-  <% unless current_user.has_subscribed? %>
-    <p><%= "£#{gym_class.price}" %></p>
-    <%= button_to "Book this gym class", pay_as_you_go_path, params: { gym_class_id: gym_class.id }, method: :post %>
+  <% if gym_class.duplicate?(current_user) %>
+    <%= "This gym class has been booked" %>
   <% else %>
-    <%= button_to "Book this gym class", bookings_path, params: { gym_class_id: gym_class.id }, method: :post %>
+    <% unless current_user.has_subscribed? %>
+      <p><%= "£#{gym_class.price}" %></p>
+      <%= button_to "Book this gym class", pay_as_you_go_path, params: { gym_class_id: gym_class.id }, method: :post %>
+    <% else %>
+      <%= button_to "Book this gym class", bookings_path, params: { gym_class_id: gym_class.id }, method: :post %>
+    <% end %>
   <% end %>
-  <p>
+    <p>
     <%= link_to "Show this gym class", gym_class %>
   </p>
 </div>
