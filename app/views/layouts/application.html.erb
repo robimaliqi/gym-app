@@ -6,11 +6,68 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+    <header class="header-area header-sticky background-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <%= link_to root_path, class: "logo" do %>
+                Training<em> Studio</em>
+              <% end %>
+
+              <!-- NAVIGATION MENU -->
+              <ul class="nav">
+                <!-- HOME PAGE LINK -->
+                <li>
+                  <%= link_to "Home", root_path, class: "active" %>
+                </li>
+
+                <!-- ABOUT PAGE LINK -->
+                <li>
+                  <%= link_to "About" %> 
+                </li>
+
+                <!-- GYM CLASSES PAGE LINK -->
+                <li>
+                  <%= link_to "Gym classes", gym_classes_path %>
+                </li>
+
+                <!-- SCHEDULES PAGE LINK -->
+                <li>
+                  <%= link_to "My bookings", bookings_path %>
+                </li>
+
+                <!-- CONTACT PAGE LINK -->
+                <li>
+                  <%= link_to "Contact" %>
+                </li>
+
+                <!-- SIGN UP PAGE LINK -->
+                <li>
+                  <%= link_to "Sign Up", new_user_registration_path %>
+                </li>
+
+                <!-- LOGIN PAGE LINK -->
+                <li class="main-button">
+                  <%= link_to "Log in", user_session_path %>
+                </li>
+              </ul>
+
+              <!-- MENU TRIGGER -->
+              <a class='menu-trigger'>
+                <span>Menu</span>
+              </a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+
     <%= yield %>
   </body>
 </html>
