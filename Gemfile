@@ -24,7 +24,6 @@ gem "turbo-rails"
 gem "stimulus-rails"
 
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
-gem "cssbundling-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
@@ -72,3 +71,4 @@ end
 
 gem 'devise'
 gem "stripe", "~> 11.2"
+gem 'bootstrap', '~> 4.6.2'
