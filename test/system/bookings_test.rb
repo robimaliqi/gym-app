@@ -1,35 +1,42 @@
 require "application_system_test_case"
+require 'test_helper'
 
 class BookingsTest < ApplicationSystemTestCase
   include TestHelpers
-  # setup do
-  #   @booking = bookings(:one)
-  # end
 
-  # test "visiting the index" do
-  #   visit bookings_url
-  #   assert_selector "h1", text: "Bookings"
-  # end
+  test "A pay as you go user books a gym class, the gym class is then addded to thier bookings" do
 
-  # test "should create booking" do
-  #   visit bookings_url
-  #   click_on "New booking"
+    register
+    click_on "Pay As You Go"
+    gym_class = GymClass.create!(title: "Yoga", date_and_time: Time.new(2024,7,10,9,0), price: "£20")
+    Stripe::Checkout::Session.stub :create, FakeStripeSession.new(gym_class.id, payment_verification_url) do
+      Stripe::Checkout::Session.stub :retrieve, FakeStripeSession.new(gym_class.id, payment_verification_url) do
+        visit gym_classes_url
+        click_on "Book this gym class"
 
-  #   click_on "Create Booking"
+        assert_text "Yoga class on 10/07/2024 at 8am has been successfully added to your Bookings"
+      end
+    end
+  end
 
-  #   assert_text "Booking was successfully created"
-  #   click_on "Back"
-  # end
+  test "As a pay as you go user once I book a gym class I can not book the same one again" do
 
-  # test "should update Booking" do
-  #   visit booking_url(@booking)
-  #   click_on "Edit this booking", match: :first
+    register
+    click_on "Pay As You Go"
+    gym_class = GymClass.create!(title: "Yoga", date_and_time: Time.new(2024,7,10,9,0), price: "£20")
+    Stripe::Checkout::Session.stub :create, FakeStripeSession.new(gym_class.id, payment_verification_url) do
+      Stripe::Checkout::Session.stub :retrieve, FakeStripeSession.new(gym_class.id, payment_verification_url) do
+        visit gym_classes_url
+        click_on "Book this gym class"
 
-  #   click_on "Update Booking"
+        assert_text "Yoga class on 10/07/2024 at 8am has been successfully added to your Bookings"
 
-  #   assert_text "Booking was successfully updated"
-  #   click_on "Back"
-  # end
+        visit gym_classes_url
+
+        assert_text "This gym class has been booked"
+      end
+    end
+  end 
 
   test "Cancel an existing booking" do
     register
@@ -46,3 +53,23 @@ class BookingsTest < ApplicationSystemTestCase
     assert_no_text "Your Spin class on 03/02/2024 at 2pm has been successfully added to your Bookings"
   end
 end
+
+class FakeStripeSession
+  def initialize(gym_class_id, payment_verification_url)
+    @gym_class_id = gym_class_id
+    @payment_verification_url = payment_verification_url
+  end
+
+  def url
+    "#{@payment_verification_url}?session_id=test_123"
+  end
+
+  def payment_status
+    'paid'
+  end
+
+  def metadata
+    OpenStruct.new(gym_class_id: @gym_class_id)
+  end
+end
+
