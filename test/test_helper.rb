@@ -47,6 +47,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   else
     :chrome
   end
+  puts DRIVER
 
   driven_by :selenium, using: DRIVER, screen_size: [1400, 1400]
 end
