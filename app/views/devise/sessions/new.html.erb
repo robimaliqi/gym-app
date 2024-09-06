@@ -1,26 +1,54 @@
-<h2>Log in</h2>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <!-- Card component -->
+        <div class="card text-black" style="border-radius: 1rem; background-color: #ed563b; box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3); margin-top: 60px; margin-bottom: 20px;">
+          <div class="card-body p-5 text-center">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+            <div class="mb-md-5 mt-md-4 pb-5">
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+              <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+              <p class="text-black-50 mb-5">Please enter your login and password!</p>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+                <!-- Email Input -->
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <%= f.email_field :email, class: "form-control form-control-lg", id: "typeEmailX", autofocus: true, autocomplete: "email" %>
+                  <%= f.label :email, "Email", class: "form-label", for: "typeEmailX" %>
+                </div>
+
+                <!-- Password Input -->
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <%= f.password_field :password, class: "form-control form-control-lg", id: "typePasswordX", autocomplete: "current-password" %>
+                  <%= f.label :password, "Password", class: "form-label", for: "typePasswordX" %>
+                </div>
+
+                <!-- Remember Me Checkbox -->
+                <% if devise_mapping.rememberable? %>
+                  <div class="field">
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me %>
+                  </div>
+                <% end %>
+
+                <!-- Submit Button with Same Font -->
+                <div>
+                  <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit" style="font-family: 'Roboto', sans-serif;">Log in</button>
+                </div>
+
+              <% end %>
+
+            </div>
+
+            <div>
+              <p class="mb-0">Don't have an account? <a href="<%= new_user_registration_path %>" class="text-black-50 fw-bold">Sign Up</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</section>
