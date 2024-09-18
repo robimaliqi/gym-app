@@ -3,7 +3,7 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="field">
+  <div class="field">
     <%= f.label :first_name %><br />
     <%= f.text_field :first_name, autofocus: true, autocomplete: "first name" %>
   </div>
@@ -36,4 +36,67 @@
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <!-- Card component -->
+        <div class="card text-black" style="border-radius: 1rem; background-color: #ed563b; box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3); margin-top: 60px; margin-bottom: 20px;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mb-md-5 mt-md-4 pb-5">
+
+              <h2 class="fw-bold mb-2 text-uppercase">Sign Up</h2>
+
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+                <!-- First Name Input -->
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <%= f.text_field :first_name, class: "form-control form-control-lg", autofocus: true, autocomplete: "first name" %>
+                  <%= f.label :first_name, class: "form-label" %>
+                </div>
+
+                <!-- Last Name Input -->
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <%= f.text_field :last_name, class: "form-control form-control-lg", autofocus: true, autocomplete: "last name" %>
+                  <%= f.label :last_name, class: "form-label" %>
+                </div>
+
+                <!-- Email Input -->
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <%= f.email_field :email, class: "form-control form-control-lg", id: "typeEmailX", autofocus: true, autocomplete: "email" %>
+                  <%= f.label :email, "Email", class: "form-label", for: "typeEmailX" %>
+                </div>
+
+                <!-- Password Input -->
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <%= f.password_field :password, class: "form-control form-control-lg", id: "typePasswordX", autocomplete: "current-password" %>
+                  <%= f.label :password, "Password", class: "form-label", for: "typePasswordX" %>
+                </div>
+
+                <!-- Password Confirmation Input -->
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <%= f.password_field :password_confirmation, class: "form-control form-control-lg", id: "typePasswordX", autocomplete: "current-password" %>
+                  <%= f.label :password_confirmation, "Password Confirmation", class: "form-label", for: "typePasswordX" %>
+                </div>
+
+
+                <!-- Submit Button with Same Font -->
+                <div>
+                  <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit" style="font-family: 'Roboto', sans-serif;">Sign Up</button>
+                </div>
+
+              <% end %>
+
+            </div>
+
+            <div>
+              <p class="mb-0">Have an account? <a href="<%= user_session_path %>" class="text-black-50 fw-bold">Log in</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
